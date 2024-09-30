@@ -60,6 +60,34 @@ input, select
 
     function boop(event)
     {
+        if (!("Notification" in window))
+        {
+            return;
+        }
+        else if (Notification.permission === "granted")
+        {
+            shwoop()
+        }
+        else if (Notification.permission !== "denied")
+            {
+            Notification.requestPermission().then((permission) =>
+                {
+                    if (permission === "granted") shwoop()
+            })
+        }
+    }
+
+    function unboop(event)
+    {
+        event.target.removeEventListener('click', unboop)
+        event.target.addEventListener('click', boop)
+
+        document.querySelector('.go').value = document.querySelector('.message').value
+        clearTimeout(timeout)
+    }
+
+    funciton shwoop(event)
+    {
         const isOneTime = document.querySelector('.in').value == 'in'
 
         const time = timeywimey()
@@ -72,15 +100,6 @@ input, select
 
         event.target.removeEventListener('click', boop)
         event.target.addEventListener('click', unboop)
-    }
-
-    function unboop(event)
-    {
-        event.target.removeEventListener('click', unboop)
-        event.target.addEventListener('click', boop)
-
-        document.querySelector('.go').value = document.querySelector('.message').value
-        clearTimeout(timeout)
     }
 
     function timeywimey()
@@ -114,21 +133,7 @@ input, select
 
     function noteefay(repeat, time)
     {
-        if (!("Notification" in window))
-        {
-            return;
-        }
-        else if (Notification.permission === "granted")
-        {
-            woopwoop()
-        }
-        else if (Notification.permission !== "denied")
-            {
-            Notification.requestPermission().then((permission) =>
-                {
-                    if (permission === "granted") woopwoop()
-            })
-        }
+        woopwoop()
 
         if (repeat)
             timeout = setTimeout (()=> { noteefay(repeat, time) }, time)
