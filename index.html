@@ -1,0 +1,143 @@
+<style media="screen">
+body
+{
+    margin: 10% 0 0 30%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+input, select
+{
+    color: white;
+    background-color: inherit;
+    font-size: 22px;
+    margin: 0 0 10px 0;
+    cursor: pointer;
+}
+.drop
+{
+    width: 200px;
+    height: 200px;
+    border: 1px dashed white;
+    cursor: pointer;
+    transition: border 0.3s ease-out;
+    margin: 0 0 10px 0;
+}
+.drop:hover
+{
+    border: 1px dashed gold;
+}
+</style>
+
+<body bgcolor='black'>
+    <input type='text' class='message' value='Fuck me'>
+    <select class='in'>
+        <option value="in">in</option>
+        <option value="every">every</option>
+    </select>
+    <input type="number" class='for' value="1000" >
+    <select class='scale'>
+        <option value="miliseconds">Miliseconds</option>
+        <option value="seconds">Seconds</option>
+        <option value="minutes">Minutes</option>
+        <option value="hours">Hours</option>
+    </select>
+    <div class="drop"></div>
+    <input type="button" class="go">
+</body>
+
+<script type="text/javascript">
+    function setButtonValue(event)
+    {
+        document.querySelector('.go').value = (event.target.value)
+    }
+    const msg = document.querySelector('.message')
+    msg.addEventListener('input', setButtonValue)
+    setButtonValue({'target': msg})
+
+    document.querySelector('.go').addEventListener('click', boop)
+
+    function boop(event)
+    {
+        const isOneTime = document.querySelector('.in').value == 'in'
+
+        const time = timeywimey()
+        if (isOneTime)
+            timeout = setTimeout(()=> { noteefay() }, time)
+        else
+            loop(time)
+
+        event.target.value = 'Un-' + event.target.value
+
+        event.target.removeEventListener('click', boop)
+        event.target.addEventListener('click', unboop)
+    }
+
+    function unboop(event)
+    {
+        event.target.removeEventListener('click', unboop)
+        event.target.addEventListener('click', boop)
+
+        document.querySelector('.go').value = document.querySelector('.message').value
+        clearTimeout(timeout)
+    }
+
+    function timeywimey()
+    {
+        const scale = document.querySelector('.scale').value
+        const time = document.querySelector('.for').value
+
+        let delay = 0
+
+        switch (scale) {
+            case 'seconds':
+                delay = time * 1000
+                break;
+            case 'minutes':
+                delay = time * 60000
+                break;
+            case 'hours':
+                delay = time * 3600000
+                break;
+            default:
+                delay = time
+        }
+
+        return delay
+    }
+
+    function loop(time)
+    {
+        timeout = setTimeout(() => { noteefay(true, time)}, time)
+    }
+
+    function noteefay(repeat, time)
+    {
+        if (!("Notification" in window))
+        {
+            return;
+        }
+        else if (Notification.permission === "granted")
+        {
+            woopwoop()
+        }
+        else if (Notification.permission !== "denied")
+            {
+            Notification.requestPermission().then((permission) =>
+                {
+                    if (permission === "granted") woopwoop()
+            })
+        }
+
+        if (repeat)
+            timeout = setTimeout (()=> { noteefay(repeat, time) }, time)
+        else
+            document.querySelector('.go').value = document.querySelector('.message').value
+    }
+
+    function woopwoop()
+    {
+        const n = new Notification(document.querySelector('.message').value, { body: `${document.querySelector('.message').value}`, icon: 'https://upload.wikimedia.org/wikipedia/en/c/cd/Oink%21_Comic_logo.jpg' });
+    }
+</script>
