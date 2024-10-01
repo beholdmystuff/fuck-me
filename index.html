@@ -66,13 +66,13 @@ input, select
         }
         else if (Notification.permission === "granted")
         {
-            shwoop()
+            shwoop(event)
         }
         else if (Notification.permission !== "denied")
             {
             Notification.requestPermission().then((permission) =>
                 {
-                    if (permission === "granted") shwoop()
+                    if (permission === "granted") shwoop(event)
             })
         }
     }
