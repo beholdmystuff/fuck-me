@@ -1,4 +1,14 @@
-<style media="screen">
+<head>
+    <meta property="og:title" content="Site Title" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://beholdmystuff.github.io/fuck-me/" />
+<meta property="og:image" content="https://pbs.twimg.com/media/EOsPE2yX4AEk-vI.jpg:large" />
+<meta property="og:description" content="If you feel like something's impending." />
+<meta name="theme-color" content="#FF000077">
+
+<!-- Include this to make the og:image larger -->
+<meta name="twitter:card" content="summary_large_image">
+    <style media="screen">
 body
 {
     margin: 10% 0 0 30%;
@@ -29,6 +39,7 @@ input, select
     border: 1px dashed gold;
 }
 </style>
+</head>
 
 <body bgcolor='black'>
     <input type='text' class='message' value='Fuck me'>
@@ -60,19 +71,16 @@ input, select
 
     function boop(event)
     {
-        if (!("Notification" in window))
-        {
-            return;
-        }
-        else if (Notification.permission === "granted")
-        {
-            shwoop(event)
-        }
+        event.target.removeEventListener('click', boop)
+        event.target.addEventListener('click', unboop)
+
+        if (!("Notification" in window)) return
+        else if (Notification.permission === "granted") shwoop(event)
         else if (Notification.permission !== "denied")
-            {
+        {
             Notification.requestPermission().then((permission) =>
-                {
-                    if (permission === "granted") shwoop(event)
+            {
+                if (permission === "granted") shwoop(event)
             })
         }
     }
@@ -88,6 +96,7 @@ input, select
 
     function shwoop(event)
     {
+
         const isOneTime = document.querySelector('.in').value == 'in'
 
         const time = timeywimey()
@@ -97,9 +106,6 @@ input, select
             loop(time)
 
         event.target.value = 'Un-' + event.target.value
-
-        event.target.removeEventListener('click', boop)
-        event.target.addEventListener('click', unboop)
     }
 
     function timeywimey()
