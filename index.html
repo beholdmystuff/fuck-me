@@ -101,9 +101,9 @@ input, select
 
         const time = timeywimey()
         if (isOneTime)
-            timeout = setTimeout(()=> { noteefay() }, time)
+            timeout = setTimeout(()=> { noteefay(false, time, event) }, time)
         else
-            loop(time)
+            loop(time, event)
 
         event.target.value = 'Un-' + event.target.value
     }
@@ -132,23 +132,23 @@ input, select
         return delay
     }
 
-    function loop(time)
+    function loop(time, event)
     {
-        timeout = setTimeout(() => { noteefay(true, time)}, time)
+        timeout = setTimeout(() => { noteefay(true, time, event)}, time)
     }
 
-    function noteefay(repeat, time)
+    function noteefay(repeat, time, event)
     {
         woopwoop()
 
         if (repeat)
-            timeout = setTimeout (()=> { noteefay(repeat, time) }, time)
+            timeout = setTimeout (()=> { noteefay(repeat, time, event) }, time)
         else
-            document.querySelector('.go').value = document.querySelector('.message').value
+            unboop()
     }
 
     function woopwoop()
     {
-        const n = new Notification(document.querySelector('.message').value, { body: `${document.querySelector('.message').value}`, icon: 'https://upload.wikimedia.org/wikipedia/en/c/cd/Oink%21_Comic_logo.jpg' });
+        const n = new Notification(document.querySelector('.message').value, { body: `You have requested a handful of ${document.querySelector('.message').value}`, icon: 'https://pbs.twimg.com/media/EOsPE2yX4AEk-vI.jpg:small' });
     }
 </script>
