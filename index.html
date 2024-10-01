@@ -149,6 +149,6 @@ input, select
 
     function woopwoop()
     {
-        const n = new Notification(document.querySelector('.message').value, { body: `You have requested a handful of ${document.querySelector('.message').value}`, icon: 'https://pbs.twimg.com/media/EOsPE2yX4AEk-vI.jpg:small' });
+        const n = new Notification(document.querySelector('.message').value, { body: `You have requested a handful of ${String(document.querySelector('.message').value).toLowerCase()}`, icon: 'icon.jpg' });
     }
 </script>
